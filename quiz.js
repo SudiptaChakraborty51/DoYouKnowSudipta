@@ -1,6 +1,6 @@
 var chalk = require('chalk');
-var readlineSync = require('readline-sync');
 var score = 0;
+var readlineSync = require('readline-sync');
 var userName = readlineSync.question("What is Your Name? ");
 
 console.log("Welcome "+chalk.blue.bold.underline(userName)+" to DO YOU KNOW SUDIPTA ? Challenge!");
