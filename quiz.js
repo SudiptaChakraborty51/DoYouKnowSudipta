@@ -1,67 +1,112 @@
+var readlineSync = require('readline-sync');
 var chalk = require('chalk');
 var score = 0;
-var readlineSync = require('readline-sync');
+
+console.log(chalk.bold.black.underline.bgMagenta("DO YOU KNOW SUDIPTA QUIZ"));
+console.log(" ");
+
 var userName = readlineSync.question("What is Your Name? ");
+console.log("Welcome " + chalk.blue.bold.underline(userName) + " to DO YOU KNOW SUDIPTA ? Quiz!");
+console.log(" ");
+console.log(chalk.cyan("RULES OF THE QUIZ are..."));
+console.log(chalk.cyan("Please enter 'a' or 'b' or 'c' for your answer"));
+console.log(chalk.cyan("For every right answer, your score will be increased by 2"));
+console.log(chalk.cyan("For every wrong answer, your score will be decreased by 1"));
+console.log(" ");
+console.log("Let's start playing");
+console.log(".........................................................................");
+console.log(" ");
 
-console.log("Welcome "+chalk.blue.bold.underline(userName)+" to DO YOU KNOW SUDIPTA ? Challenge!");
-console.log("Let's start playing.......");
-console.log("...................................................");
-
-function play(question, answer){
-  var userAnswer = readlineSync.question(question);
-  if(userAnswer.toUpperCase() === answer.toUpperCase()){
-    console.log("You're RIGHT!");
-    score = score + 1;
+function check(question, answer, correct, n) {
+  var userAnswer = readlineSync.question(chalk.bold.blue("Q" + n + " : " + question));
+  console.log(" ");
+  if (userAnswer.toLowerCase() === answer.toLowerCase()) {
+    console.log(chalk.green("You're RIGHT!😊"));
+    score = score + 2;
   } else {
-    console.log("You're WRONG!");
+    console.log(chalk.red("You're WRONG!😞"));
+    console.log(chalk.yellow("Correct answer is > " + correct));
+    score = score - 1;
   }
-  console.log("Your Score is : "+score);
+  console.log(chalk.green("Your Current Score is : " + score));
 }
 
 var questionList = [
   {
-  question: "Which drink does SUDIPTA like the most? TEA or COFFEE : ",
-  answer: "TEA"
+    question: `What is my age?
+    a: 20
+    b: 22
+    c: 21\n`,
+    answer: "c",
+    correct: "c: 21"
   },
   {
-  question: "What SUDIPTA most enjoy doing in his spare time? READING BOOKS or SLEEPING : ",
-  answer: "SLEEPING"
+    question: `Which drink does I like the most?
+    a: Tea
+    b: Coffee
+    c: Juice\n`,
+    answer: "a",
+    correct: "a: Tea"
   },
   {
-  question: "What is SUDIPTA's favorite holiday destination? MOUNTAIN or SEA-BEACH : ",
-  answer: "MOUNTAIN"
+    question: `What I most enjoy doing in my spare time?
+    a: Reading Books
+    b: Scrolling Social Media
+    c: Coding\n`,
+    answer: "a",
+    correct: "a: Reading Books"
   },
   {
-  question: "What type of movies does SUDIPTA like? COMEDY or HORROR : ",
-  answer: "COMEDY"
+    question: `What is my favorite holiday destination?
+    a: Mountain
+    b: Sea-Beach
+    c: Jungle\n`,
+    answer: "a",
+    correct: "a: Mountain"
   },
   {
-  question: "Which app is the best for SUDIPTA? WHATSAPP or FACEBOOK : ",
-  answer: "WHATSAPP"
+    question: `What type of movies I like most?
+    a: Horror
+    b: Comedy
+    c: Romantic\n`,
+    answer: "b",
+    correct: "b: Comedy"
+  },
+  {
+    question: `Which app is the best for me?
+    a: Instagram
+    b: LinkedIn
+    c: Twitter\n`,
+    answer: "b",
+    correct: "b: LinkedIn"
   }
 ]
 
-var highScore = [
-  {
-    name: "Sudipta",
-    score: 5
-  },
-  {
-    name: "Aritra",
-    score: 5
+function play() {
+  for (var i = 0; i < questionList.length; i++) {
+    check(questionList[i].question, questionList[i].answer, questionList[i].correct, i + 1);
   }
-]
-
-for(var i = 0; i < questionList.length; i++){
-  play(questionList[i].question,questionList[i].answer);
 }
-console.log("Thanks For Playing this game!")
-console.log("YOU SCORED : "+chalk.red(score));
+play();
 
-for(var j = 0; j < highScore.length; j++){
-  if(score >= highScore[j].score){
-    console.log(chalk.green("HURRAH!")+" You has beaten the highscore of "+chalk.red(highScore[j].name)+".");
-  } else {
-    console.log("Highscore is : "+chalk.red(highScore[j].score));
-  }
+var highScore =
+{
+  name: "Sudipta",
+  score: 12
+};
+var userScore =
+{
+  name: userName,
+  score: score
+};
+
+console.log(" ");
+console.log(".........................................................................");
+console.log(chalk.blue("Thanks " + userName + " For Playing this game!😀"));
+console.log(chalk.greenBright("YOU SCORED : " +score));
+
+if (userScore.score >= highScore.score) {
+  console.log(chalk.greenBright("HURRAH! You has beaten the highscore."));
+} else {
+  console.log(chalk.yellowBright("Highscore is : " + highScore.score));
 }
